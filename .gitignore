@@ -1,6 +1,13 @@
 *~
 
+*.eld
+*.cache
+.lsp-session-*
 auto-save-list
 eln-cache
 elpa
+history
+projects
+session.*
 transient
+tutorial
