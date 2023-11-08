@@ -32,6 +32,8 @@
   )
 )
 
+(use-package rg)
+
 (use-package flymake
   :config
   (define-key flymake-mode-map (kbd "M-n") 'flymake-goto-next-error)
@@ -70,6 +72,7 @@
 
 (use-package projectile
   :config
+  (setq projectile-enable-caching t)
   (projectile-mode +1)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 )
@@ -109,9 +112,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(magit projectile company company-mode lsp-mode rustic which-key vterm use-package doom-themes doom-modeline))
+   '(rg magit projectile company company-mode lsp-mode rustic which-key vterm use-package doom-themes doom-modeline))
  '(safe-local-variable-values
-   '((eval append 'lsp-file-watch-ignored-directories
+   '((lsp-file-watch-ignored-directories quote
+                                         ("[/\\\\].git\\'" "[/\\\\]afl\\'" "[/\\\\]runtimes\\'" "[/\\\\]target\\'"))
+     (eval append 'lsp-file-watch-ignored-directories
            '("[/\\\\]afl\\'" "[/\\\\]runtimes\\'" "[/\\\\]target\\'"))
      (eval append 'lsp-file-watch-ignored-directories
            ("[/\\\\]afl\\'" "[/\\\\]runtimes\\'" "[/\\\\]target\\'"))
