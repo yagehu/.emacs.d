@@ -4,10 +4,12 @@
 *.cache
 .lsp-session-*
 auto-save-list
+bookmarks
 eln-cache
 elpa
 history
 projects
 session.*
+tramp
 transient
 tutorial

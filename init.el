@@ -11,6 +11,7 @@
 (setq-default whitespace-line-column 80)
 (global-whitespace-mode 1)
 
+(global-display-line-numbers-mode)
 (setq-default indent-tabs-mode nil)
 
 (electric-indent-mode -1)
@@ -93,6 +94,8 @@
   )
 )
 
+(use-package yaml-mode)
+
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c l")
@@ -112,7 +115,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(rg magit projectile company company-mode lsp-mode rustic which-key vterm use-package doom-themes doom-modeline))
+   '(yaml-mode rg magit projectile company company-mode lsp-mode rustic which-key vterm use-package doom-themes doom-modeline))
  '(safe-local-variable-values
    '((lsp-file-watch-ignored-directories quote
                                          ("[/\\\\].git\\'" "[/\\\\]afl\\'" "[/\\\\]runtimes\\'" "[/\\\\]target\\'"))
