@@ -1,6 +1,8 @@
 (setq custom-file "~/.emacs-custom.el")
 (load custom-file 'noerror)
 
+(setq auto-window-vscroll nil)
+
 (set-frame-font "CaskaydiaCove Nerd Font 12" nil t)
 
 (menu-bar-mode -1)
@@ -54,7 +56,7 @@
                  ((require 'elpaca))
                  ((elpaca-generate-autoloads "elpaca" repo)))
             (progn (message "%s" (buffer-string)) (kill-buffer buffer))
-          (error "%s" (with-current-buffer buffer (buffer-string))))
+          (error "%s" (with-current-buffer buffer (buffer-ring))))
       ((error) (warn "%s" err) (delete-directory repo 'recursive))))
   (unless (require 'elpaca-autoloads nil t)
     (require 'elpaca)
@@ -69,23 +71,31 @@
 
 (setq use-package-always-ensure t)
 
+(use-package emacs
+  :ensure f
+  :custom
+  (tab-always-indent 'complete))
+
 (use-package exec-path-from-shell
   :config
   (when (memq window-system '(mac ns x pgtk))
     (exec-path-from-shell-initialize)))
 
-(use-package doom-modeline :config (doom-modeline-mode))
+(use-package doom-modeline
+  :init
+  (setq doom-modeline-enable-word-count nil)
+  :config (doom-modeline-mode))
 (use-package doom-themes
   :config
   (load-theme 'doom-one-light t)
   (doom-themes-visual-bell-config)
   (doom-themes-org-config))
 
-(use-package vertico
-  :init (vertico-mode))
+(use-package which-key
+  :config (which-key-mode))
 
-(use-package marginalia
-  :init (marginalia-mode))
+(use-package vertico
+  :config (vertico-mode))
 
 (use-package consult
   ;; Replace bindings. Lazily loaded due by `use-package'.
@@ -223,3 +233,45 @@
   :config
   (setq rustic-format-trigger 'on-save
         rustic-rustfmt-args "+nightly"))
+
+(use-package lsp-mode
+  :custom
+  (lsp-inlay-hint-enable t)
+  ;; These are optional configurations. See https://emacs-lsp.github.io/lsp-mode/page/lsp-rust-analyzer/#lsp-rust-analyzer-display-chaining-hints for a full list
+  (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
+  (lsp-rust-analyzer-display-chaining-hints t)
+  (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
+  (lsp-rust-analyzer-display-closure-return-type-hints t)
+  (lsp-rust-analyzer-display-parameter-hints nil)
+  (lsp-rust-analyzer-display-reborrow-hints nil)
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-completion-provider :none)
+  (defun corfu-lsp-setup ()
+    (setq-local completion-styles '(orderless)
+                completion-category-defaults nil))
+  (add-hook 'lsp-mode-hook #'corfu-lsp-setup)
+  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+         (rust-mode . lsp)
+         ;; if you want which-key integration
+         (lsp-mode . lsp-enable-which-key-integration)
+         (lsp-completion-mode . corfu-lsp-setup))
+  :commands lsp)
+
+(use-package cape
+  :demand t
+  :after vertico
+  :config
+  (add-hook 'completion-at-point-functions #'cape-file))
+
+(use-package corfu
+  :custom
+  (corfu-auto t)
+  :config
+  (global-corfu-mode))
+
+(use-package corfu-terminal
+  :config
+  (unless (display-graphic-p)
+    (corfu-terminal-mode +1)))

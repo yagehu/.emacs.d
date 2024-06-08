@@ -1,6 +1,10 @@
 *~
 
+.lsp-session-v1
 eln-cache
 elpaca
 eshell
+projects
+tramp
+tree-sitter
 url
