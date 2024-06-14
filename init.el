@@ -275,3 +275,5 @@
   :config
   (unless (display-graphic-p)
     (corfu-terminal-mode +1)))
+
+(use-package geiser-guile)
