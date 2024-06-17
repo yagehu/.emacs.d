@@ -277,3 +277,5 @@
     (corfu-terminal-mode +1)))
 
 (use-package geiser-guile)
+
+(use-package proof-general)
