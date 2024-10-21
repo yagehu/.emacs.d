@@ -276,6 +276,12 @@
   (unless (display-graphic-p)
     (corfu-terminal-mode +1)))
 
+<<<<<<< Updated upstream
 (use-package geiser-guile)
 
 (use-package proof-general)
+=======
+(use-package proof-general
+  :custom
+  (coq-compile-before-require t))
+>>>>>>> Stashed changes
