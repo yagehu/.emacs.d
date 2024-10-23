@@ -56,7 +56,7 @@
                  ((require 'elpaca))
                  ((elpaca-generate-autoloads "elpaca" repo)))
             (progn (message "%s" (buffer-string)) (kill-buffer buffer))
-          (error "%s" (with-current-buffer buffer (buffer-ring))))
+          (error "%s" (with-current-buffer buffer (buffer-string))))
       ((error) (warn "%s" err) (delete-directory repo 'recursive))))
   (unless (require 'elpaca-autoloads nil t)
     (require 'elpaca)
@@ -234,30 +234,30 @@
   (setq rustic-format-trigger 'on-save
         rustic-rustfmt-args "+nightly"))
 
-(use-package lsp-mode
-  :custom
-  (lsp-inlay-hint-enable t)
-  ;; These are optional configurations. See https://emacs-lsp.github.io/lsp-mode/page/lsp-rust-analyzer/#lsp-rust-analyzer-display-chaining-hints for a full list
-  (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
-  (lsp-rust-analyzer-display-chaining-hints t)
-  (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
-  (lsp-rust-analyzer-display-closure-return-type-hints t)
-  (lsp-rust-analyzer-display-parameter-hints nil)
-  (lsp-rust-analyzer-display-reborrow-hints nil)
-  :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-  (setq lsp-keymap-prefix "C-c l")
-  (setq lsp-completion-provider :none)
-  (defun corfu-lsp-setup ()
-    (setq-local completion-styles '(orderless)
-                completion-category-defaults nil))
-  (add-hook 'lsp-mode-hook #'corfu-lsp-setup)
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (rust-mode . lsp)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration)
-         (lsp-completion-mode . corfu-lsp-setup))
-  :commands lsp)
+;; (use-package lsp-mode
+;;   :custom
+;;   (lsp-inlay-hint-enable t)
+;;   ;; These are optional configurations. See https://emacs-lsp.github.io/lsp-mode/page/lsp-rust-analyzer/#lsp-rust-analyzer-display-chaining-hints for a full list
+;;   (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
+;;   (lsp-rust-analyzer-display-chaining-hints t)
+;;   (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
+;;   (lsp-rust-analyzer-display-closure-return-type-hints t)
+;;   (lsp-rust-analyzer-display-parameter-hints nil)
+;;   (lsp-rust-analyzer-display-reborrow-hints nil)
+;;   :init
+;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+;;   (setq lsp-keymap-prefix "C-c l")
+;;   (setq lsp-completion-provider :none)
+;;   (defun corfu-lsp-setup ()
+;;     (setq-local completion-styles '(orderless)
+;;                 completion-category-defaults nil))
+;;   (add-hook 'lsp-mode-hook #'corfu-lsp-setup)
+;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
+;;          (rust-mode . lsp)
+;;          ;; if you want which-key integration
+;;          (lsp-mode . lsp-enable-which-key-integration)
+;;          (lsp-completion-mode . corfu-lsp-setup))
+;;   :commands lsp)
 
 (use-package cape
   :demand t
@@ -276,12 +276,8 @@
   (unless (display-graphic-p)
     (corfu-terminal-mode +1)))
 
-<<<<<<< Updated upstream
 (use-package geiser-guile)
 
-(use-package proof-general)
-=======
 (use-package proof-general
   :custom
   (coq-compile-before-require t))
->>>>>>> Stashed changes

@@ -2,9 +2,11 @@
 
 .lsp-session-v1
 eln-cache
+elpa
 elpaca
 eshell
 projects
 tramp
+transient
 tree-sitter
 url
