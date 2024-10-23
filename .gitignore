@@ -1,10 +1,13 @@
 *~
 
 .lsp-session-v1
+.org-id-locations
+bookmarks
 eln-cache
 elpa
 elpaca
 eshell
+org-roam.db
 projects
 tramp
 transient

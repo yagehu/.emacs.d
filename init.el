@@ -3,7 +3,7 @@
 
 (setq auto-window-vscroll nil)
 
-(set-frame-font "CaskaydiaCove Nerd Font 12" nil t)
+(set-frame-font "CaskaydiaCove Nerd Font 16" nil t)
 
 (menu-bar-mode -1)
 (tool-bar-mode -1)
@@ -276,7 +276,18 @@
   (unless (display-graphic-p)
     (corfu-terminal-mode +1)))
 
+(use-package org-roam
+  :custom
+  (find-file-visit-truename t)
+  :config
+  (setq org-roam-directory (file-truename "~/org-roam"))
+  (org-roam-db-autosync-mode))
+
 (use-package geiser-guile)
+
+(use-package olivetti
+  :custom
+  (olivetti-style 'fancy))
 
 (use-package proof-general
   :custom
