@@ -281,7 +281,11 @@
   (find-file-visit-truename t)
   :config
   (setq org-roam-directory (file-truename "~/org-roam"))
-  (org-roam-db-autosync-mode))
+  (org-roam-db-autosync-mode)
+  :hook
+  (org-mode . org-indent-mode)
+  (org-mode . olivetti-mode)
+)
 
 (use-package geiser-guile)
 
