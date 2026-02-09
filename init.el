@@ -85,11 +85,18 @@
   :init
   (setq doom-modeline-enable-word-count nil)
   :config (doom-modeline-mode))
-(use-package doom-themes
+;; (use-package doom-themes
+;;   :config
+;;   (load-theme 'doom-one-light t)
+;;   (doom-themes-visual-bell-config)
+;;   (doom-themes-org-config))
+
+(use-package catppuccin-theme
+  :init
+  (setq catppuccin-flavor 'latte)
   :config
-  (load-theme 'doom-one-light t)
-  (doom-themes-visual-bell-config)
-  (doom-themes-org-config))
+  (load-theme 'catppuccin :no-confirm)
+)
 
 (use-package which-key
   :config (which-key-mode))
