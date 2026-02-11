@@ -76,6 +76,9 @@
   :custom
   (tab-always-indent 'complete))
 
+(use-package clipetty
+  :config (global-clipetty-mode))
+
 (use-package exec-path-from-shell
   :config
   (when (memq window-system '(mac ns x pgtk))
